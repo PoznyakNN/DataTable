@@ -1,0 +1,23 @@
+<div>
+    <input class="input" placeholder="поиск" ng-model="searchText"/>
+</div>
+
+<table class="table">
+    <thead style="font-weight: bold; font-size: 20px">
+    <tr ng-repeat="headers in tableHeaders">
+        <td ng-repeat="header in headers">
+            <button class="button" ng-click="sortCheck($index)">{{header}}</button>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="items in tableItems | orderBy:sortType:sortReverse | filter:searchText | start:currentPage*listSize | limitTo:listSize">
+        <td ng-repeat="item in items">{{item}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<button ng-click="currentPage = 0">Первая страница</button>
+<button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">Назад</button>
+{{currentPage+1}}/{{numberOfPages()}}
+<button ng-disabled="currentPage >= tableItems.length/tableSize - 1" ng-click="currentPage=currentPage+1">Вперед</button>
